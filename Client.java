@@ -13,12 +13,20 @@ public class Client{ //Client (Email writter)
                 InetAddress IP = InetAddress.getLocalHost();
                 String hostname = IP.getHostName();
                 System.out.println("Mail Client Starting at host: "+ hostname); //prints the hostname (DESKTOP-XXXX)
-
-                System.out.print("Type name of Mail servers: ");
-                String mailServer = console.nextLine(); //get user input for server hostname
+                
+                InetAddress serverAddress = null;
+                while (true) { //loop for server hostname input
+                    try {
+                        System.out.print("Type name of Mail servers: ");
+                        String mailServer = console.nextLine(); //get user input for server hostname
+                        serverAddress = InetAddress.getByName(mailServer); //save mail server ip to server address
+                        break ; //mail server is valid, exit loop
+                    } catch (UnknownHostException ex) { //catch invalid hostname in InetAddress
+                        System.out.println("Unknown host name");
+                    }
+                }
 
                 clientSocket = new DatagramSocket(); //create empty socket object
-                InetAddress serverAddress = InetAddress.getByName(mailServer); //save mail server ip to server address
 
                 System.out.println("Creating New Email.."); //mail inputs
                 System.out.print("To: ");

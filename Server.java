@@ -8,7 +8,7 @@ public class Server{ //server
         try {
             serverSocket = new DatagramSocket(12121);
             byte[] receiveData = new byte[1024];
-            String[] vaildEmails = {"zayed@gmail.com", "zaid@gmail.com"}; //valid emails for "TO", checks validity
+            String[] vaildTOEmails = {"zayed@gmail.com", "zaid@gmail.com"}; //valid emails for "TO", checks validity
 
             InetAddress IP = InetAddress.getLocalHost();
             System.out.println("Mail Server Starting at host: "+ IP.getHostName()); //prints server hostname
@@ -46,7 +46,16 @@ public class Server{ //server
                 System.out.println("TIME: " + timestamp);
                 System.out.println(body);
 
-                if (!to.isEmpty() && !from.isEmpty() && to.contains("@") && from.contains("@"))
+                boolen found = false;
+                for (String s: strarr) //for each loop, checks if "TO" is an email in server
+                {
+                    if (s.equals(to))
+                    {
+                        found = true;
+                        break ;
+                    }
+                }
+                if (!to.isEmpty() && !from.isEmpty() && to.contains("@") && from.contains("@") && found)
                 {
                     System.out.println("The Header fields are verified.");
                     System.out.println("Sending 250 Ok");
@@ -88,7 +97,8 @@ public class Server{ //server
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        } catch ()
+        finally {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
             }
