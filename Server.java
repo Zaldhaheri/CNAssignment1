@@ -46,10 +46,10 @@ public class Server{ //server
                 System.out.println("TIME: " + timestamp);
                 System.out.println(body);
 
-                boolen found = false;
-                for (String s: strarr) //for each loop, checks if "TO" is an email in server
+                boolean found = false;
+                for (String s: vaildTOEmails) //for each loop, checks if "TO" is an email in server
                 {
-                    if (s.equals(to))
+                    if (s.equalsIgnoreCase(to))
                     {
                         found = true;
                         break ;
@@ -97,8 +97,7 @@ public class Server{ //server
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch ()
-        finally {
+        } finally {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
             }
